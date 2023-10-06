@@ -98,6 +98,7 @@ def conll_df(path,
                categories=True,
                extra_fields='auto',
                drop_redundant=True,
+                chucksize=None,
                **kwargs):
     """
     Optimised CONLL-U reader for v2.0 data
@@ -149,7 +150,7 @@ def conll_df(path,
         cols = ['file', 's'] + CONLL_COLUMNS
 
     df = pd.read_csv(sents, sep="\t", header=None, names=cols, quoting=kwargs.pop('quoting', 3),
-                     index_col=[0, 1, 2], engine='c', na_filter=False, **kwargs)
+                     index_col=[0, 1, 2], engine='c', na_filter=False, chucksize = chucksize, **kwargs)
 
     if v2 and not skip_morph:
         df['m'] = df['m'].fillna('')
